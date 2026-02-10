@@ -1,0 +1,39 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/interfaces/ITieredTokenLocker.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.22;\n\ninterface ITieredTokenLocker {\n    // Tier enumeration\n    enum Tier {\n        None,\n        Basic,\n        Bronze,\n        Silver,\n        Gold,\n        Diamond\n    }\n\n    // Lock information for each user\n    struct LockInfo {\n        uint256 amount; // Total locked amount\n        uint256 lastDepositTime; // Timestamp of last deposit\n        Tier currentTier; // Current tier level\n        bool exists; // Whether lock exists\n    }\n\n    function getLockInfo(\n        address user\n    ) external view returns (uint256 amount, uint256 unlockTime, Tier tier, bool canUnlock);\n}\n"
+    },
+    "contracts/mocks/MockTieredTokenLocker.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.22;\n\nimport \"../interfaces/ITieredTokenLocker.sol\";\n\ncontract MockTieredTokenLocker is ITieredTokenLocker {\n    // Internal storage for mock lock data\n    struct MockLock {\n        uint256 amount;\n        uint256 unlockTime;\n        Tier tier;\n        bool canUnlock;\n    }\n\n    mapping(address => MockLock) private locks;\n\n    // ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n    // ┃        Mock Setters       ┃\n    // ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n\n    /// @notice Set mock lock info for a user\n    function setLockInfo(address user, uint256 amount, uint256 unlockTime, Tier tier, bool canUnlock) external {\n        locks[user] = MockLock({ amount: amount, unlockTime: unlockTime, tier: tier, canUnlock: canUnlock });\n    }\n\n    /// @notice Clear mock lock info\n    function clearLockInfo(address user) external {\n        delete locks[user];\n    }\n\n    // ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n    // ┃     Interface Function    ┃\n    // ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n\n    function getLockInfo(\n        address user\n    ) external view override returns (uint256 amount, uint256 unlockTime, Tier tier, bool canUnlock) {\n        MockLock memory info = locks[user];\n\n        return (info.amount, info.unlockTime, info.tier, info.canUnlock);\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "evmVersion": "paris",
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

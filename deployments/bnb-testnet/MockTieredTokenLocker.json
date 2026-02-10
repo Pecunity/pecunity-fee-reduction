@@ -1,0 +1,204 @@
+{
+  "address": "0x63Cdf4c4fF8091229E1088eDDB36DA1BB3Cfe5B5",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "clearLockInfo",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "getLockInfo",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "unlockTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "enum ITieredTokenLocker.Tier",
+          "name": "tier",
+          "type": "uint8"
+        },
+        {
+          "internalType": "bool",
+          "name": "canUnlock",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "unlockTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "enum ITieredTokenLocker.Tier",
+          "name": "tier",
+          "type": "uint8"
+        },
+        {
+          "internalType": "bool",
+          "name": "canUnlock",
+          "type": "bool"
+        }
+      ],
+      "name": "setLockInfo",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x7034843d77a9cad38bd9167717b4ba9032fc21e5cefd6cc386ff449b4a9ce019",
+  "receipt": {
+    "to": null,
+    "from": "0xd4Fa4ee93D7D27c1c4Be36bfBa67183dD4320123",
+    "contractAddress": "0x63Cdf4c4fF8091229E1088eDDB36DA1BB3Cfe5B5",
+    "transactionIndex": 0,
+    "gasUsed": "235114",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xa0c0e9ccb0d644b23cac9f1257a080e073c4575b0be7df91b4e5a3288f2612a6",
+    "transactionHash": "0x7034843d77a9cad38bd9167717b4ba9032fc21e5cefd6cc386ff449b4a9ce019",
+    "logs": [],
+    "blockNumber": 89027667,
+    "cumulativeGasUsed": "235114",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "a27d8e0c6c71f0dd6444ccc7b20b393c",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.22+commit.4fc1097e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"clearLockInfo\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"getLockInfo\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"unlockTime\",\"type\":\"uint256\"},{\"internalType\":\"enum ITieredTokenLocker.Tier\",\"name\":\"tier\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"canUnlock\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"unlockTime\",\"type\":\"uint256\"},{\"internalType\":\"enum ITieredTokenLocker.Tier\",\"name\":\"tier\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"canUnlock\",\"type\":\"bool\"}],\"name\":\"setLockInfo\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"clearLockInfo(address)\":{\"notice\":\"Clear mock lock info\"},\"setLockInfo(address,uint256,uint256,uint8,bool)\":{\"notice\":\"Set mock lock info for a user\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/mocks/MockTieredTokenLocker.sol\":\"MockTieredTokenLocker\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/interfaces/ITieredTokenLocker.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.22;\\n\\ninterface ITieredTokenLocker {\\n    // Tier enumeration\\n    enum Tier {\\n        None,\\n        Basic,\\n        Bronze,\\n        Silver,\\n        Gold,\\n        Diamond\\n    }\\n\\n    // Lock information for each user\\n    struct LockInfo {\\n        uint256 amount; // Total locked amount\\n        uint256 lastDepositTime; // Timestamp of last deposit\\n        Tier currentTier; // Current tier level\\n        bool exists; // Whether lock exists\\n    }\\n\\n    function getLockInfo(\\n        address user\\n    ) external view returns (uint256 amount, uint256 unlockTime, Tier tier, bool canUnlock);\\n}\\n\",\"keccak256\":\"0x769ee858a30180468b3725abb48e2157a4d28493f83f0a5c0f6b5470afc5c43d\",\"license\":\"MIT\"},\"contracts/mocks/MockTieredTokenLocker.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.22;\\n\\nimport \\\"../interfaces/ITieredTokenLocker.sol\\\";\\n\\ncontract MockTieredTokenLocker is ITieredTokenLocker {\\n    // Internal storage for mock lock data\\n    struct MockLock {\\n        uint256 amount;\\n        uint256 unlockTime;\\n        Tier tier;\\n        bool canUnlock;\\n    }\\n\\n    mapping(address => MockLock) private locks;\\n\\n    // \\u250f\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2513\\n    // \\u2503        Mock Setters       \\u2503\\n    // \\u2517\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u251b\\n\\n    /// @notice Set mock lock info for a user\\n    function setLockInfo(address user, uint256 amount, uint256 unlockTime, Tier tier, bool canUnlock) external {\\n        locks[user] = MockLock({ amount: amount, unlockTime: unlockTime, tier: tier, canUnlock: canUnlock });\\n    }\\n\\n    /// @notice Clear mock lock info\\n    function clearLockInfo(address user) external {\\n        delete locks[user];\\n    }\\n\\n    // \\u250f\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2513\\n    // \\u2503     Interface Function    \\u2503\\n    // \\u2517\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u251b\\n\\n    function getLockInfo(\\n        address user\\n    ) external view override returns (uint256 amount, uint256 unlockTime, Tier tier, bool canUnlock) {\\n        MockLock memory info = locks[user];\\n\\n        return (info.amount, info.unlockTime, info.tier, info.canUnlock);\\n    }\\n}\\n\",\"keccak256\":\"0x1bdfaa89925c6577f58f7f269a08f49eb790435257145f4c0de196af47c8771c\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5061034a806100206000396000f3fe608060405234801561001057600080fd5b50600436106100415760003560e01c806329bddc20146100465780637238ccdb1461005b578063f8e4752a14610087575b600080fd5b610059610054366004610233565b6100c5565b005b61006e610069366004610299565b610175565b60405161007e94939291906102d1565b60405180910390f35b610059610095366004610299565b6001600160a01b031660009081526020819052604081208181556001810191909155600201805461ffff19169055565b60405180608001604052808581526020018481526020018360058111156100ee576100ee6102bb565b81528215156020918201526001600160a01b03871660009081528082526040908190208351815591830151600180840191909155908301516002830180549192909160ff191690836005811115610147576101476102bb565b021790555060609190910151600290910180549115156101000261ff00199092169190911790555050505050565b6001600160a01b03811660009081526020818152604080832081516080810183528154815260018201549381019390935260028101548493849384938493909183019060ff1660058111156101cc576101cc6102bb565b60058111156101dd576101dd6102bb565b815260029190910154610100900460ff16151560209182015281519082015160408301516060909301519199909850919650945092505050565b80356001600160a01b038116811461022e57600080fd5b919050565b600080600080600060a0868803121561024b57600080fd5b61025486610217565b9450602086013593506040860135925060608601356006811061027657600080fd5b91506080860135801515811461028b57600080fd5b809150509295509295909350565b6000602082840312156102ab57600080fd5b6102b482610217565b9392505050565b634e487b7160e01b600052602160045260246000fd5b8481526020810184905260808101600684106102fd57634e487b7160e01b600052602160045260246000fd5b83604083015282151560608301529594505050505056fea26469706673582212208066d3cf878dee5e24cdd7b3bc11c434cd7c9db7222f7c679405be3db5cc8ca364736f6c63430008160033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100415760003560e01c806329bddc20146100465780637238ccdb1461005b578063f8e4752a14610087575b600080fd5b610059610054366004610233565b6100c5565b005b61006e610069366004610299565b610175565b60405161007e94939291906102d1565b60405180910390f35b610059610095366004610299565b6001600160a01b031660009081526020819052604081208181556001810191909155600201805461ffff19169055565b60405180608001604052808581526020018481526020018360058111156100ee576100ee6102bb565b81528215156020918201526001600160a01b03871660009081528082526040908190208351815591830151600180840191909155908301516002830180549192909160ff191690836005811115610147576101476102bb565b021790555060609190910151600290910180549115156101000261ff00199092169190911790555050505050565b6001600160a01b03811660009081526020818152604080832081516080810183528154815260018201549381019390935260028101548493849384938493909183019060ff1660058111156101cc576101cc6102bb565b60058111156101dd576101dd6102bb565b815260029190910154610100900460ff16151560209182015281519082015160408301516060909301519199909850919650945092505050565b80356001600160a01b038116811461022e57600080fd5b919050565b600080600080600060a0868803121561024b57600080fd5b61025486610217565b9450602086013593506040860135925060608601356006811061027657600080fd5b91506080860135801515811461028b57600080fd5b809150509295509295909350565b6000602082840312156102ab57600080fd5b6102b482610217565b9392505050565b634e487b7160e01b600052602160045260246000fd5b8481526020810184905260808101600684106102fd57634e487b7160e01b600052602160045260246000fd5b83604083015282151560608301529594505050505056fea26469706673582212208066d3cf878dee5e24cdd7b3bc11c434cd7c9db7222f7c679405be3db5cc8ca364736f6c63430008160033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "clearLockInfo(address)": {
+        "notice": "Clear mock lock info"
+      },
+      "setLockInfo(address,uint256,uint256,uint8,bool)": {
+        "notice": "Set mock lock info for a user"
+      }
+    },
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 53,
+        "contract": "contracts/mocks/MockTieredTokenLocker.sol:MockTieredTokenLocker",
+        "label": "locks",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_mapping(t_address,t_struct(MockLock)48_storage)"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_bool": {
+        "encoding": "inplace",
+        "label": "bool",
+        "numberOfBytes": "1"
+      },
+      "t_enum(Tier)8": {
+        "encoding": "inplace",
+        "label": "enum ITieredTokenLocker.Tier",
+        "numberOfBytes": "1"
+      },
+      "t_mapping(t_address,t_struct(MockLock)48_storage)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => struct MockTieredTokenLocker.MockLock)",
+        "numberOfBytes": "32",
+        "value": "t_struct(MockLock)48_storage"
+      },
+      "t_struct(MockLock)48_storage": {
+        "encoding": "inplace",
+        "label": "struct MockTieredTokenLocker.MockLock",
+        "members": [
+          {
+            "astId": 40,
+            "contract": "contracts/mocks/MockTieredTokenLocker.sol:MockTieredTokenLocker",
+            "label": "amount",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 42,
+            "contract": "contracts/mocks/MockTieredTokenLocker.sol:MockTieredTokenLocker",
+            "label": "unlockTime",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 45,
+            "contract": "contracts/mocks/MockTieredTokenLocker.sol:MockTieredTokenLocker",
+            "label": "tier",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_enum(Tier)8"
+          },
+          {
+            "astId": 47,
+            "contract": "contracts/mocks/MockTieredTokenLocker.sol:MockTieredTokenLocker",
+            "label": "canUnlock",
+            "offset": 1,
+            "slot": "2",
+            "type": "t_bool"
+          }
+        ],
+        "numberOfBytes": "96"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}
