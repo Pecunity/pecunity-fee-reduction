@@ -9,6 +9,7 @@ import { IStrategyVault } from "./interfaces/IStrategyVault.sol";
 import { ITieredTokenLocker } from "../contracts/interfaces/ITieredTokenLocker.sol";
 import { ICryptoOctoRarityRegistry } from "../contracts/interfaces/ICryptoOctoRarityRegistry.sol";
 import { IStrategyBuilderFeeReductionRouter } from "./interfaces/IStrategyBuilderFeeReductionRouter.sol";
+import { IStrategyVaultFactory } from "./interfaces/IStrategyVaultFactory.sol";
 
 /**
  * @title FeeReduction
@@ -52,6 +53,9 @@ contract StrategyBuilderFeeReduction is IStrategyBuilderFeeReduction {
      */
     address public immutable lock;
     address public immutable router;
+    address public immutable factory;
+
+    bytes4 public strategyVaultInterfaceId = 0x3d6efa61;
 
     /**
      * @notice Mapping of user address to deposited NFT tokenId.
@@ -64,9 +68,10 @@ contract StrategyBuilderFeeReduction is IStrategyBuilderFeeReduction {
     // ┃     Constructor     ┃
     // ┗━━━━━━━━━━━━━━━━━━━━━┛
 
-    constructor(address _lock, address _router) {
+    constructor(address _lock, address _router, address _factory) {
         lock = _lock;
         router = _router;
+        factory = _factory;
     }
 
     receive() external payable {}
@@ -220,22 +225,14 @@ contract StrategyBuilderFeeReduction is IStrategyBuilderFeeReduction {
      * @param wallet The wallet or contract address to resolve.
      * @return resolved The resolved owner or original wallet address.
      */
-    function _resolveVaultOwner(address wallet) internal view returns (address) {
+    function _resolveVaultOwner(address wallet) public view returns (address) {
         // EOA
         if (wallet.code.length == 0) return wallet;
 
         // ─────────────────────────────
-        // 1️⃣ Try ERC165 supportsInterface
+        // 1️⃣ Check if wallet is a deployed strategy vault
         // ─────────────────────────────
-        bool isStrategyVault = false;
-
-        {
-            (bool _ok, bytes memory _data) = wallet.staticcall(
-                abi.encodeWithSignature("supportsInterface(bytes4)", type(IStrategyVault).interfaceId)
-            );
-
-            if (_ok && _data.length >= 32) isStrategyVault = abi.decode(_data, (bool));
-        }
+        bool isStrategyVault = IStrategyVaultFactory(factory).isDeployedVault(wallet);
 
         // No strategy vault
         if (!isStrategyVault) return wallet;
@@ -243,11 +240,8 @@ contract StrategyBuilderFeeReduction is IStrategyBuilderFeeReduction {
         // ─────────────────────────────
         // 2️⃣ Try owner()
         // ─────────────────────────────
-        (bool ok, bytes memory data) = wallet.staticcall(abi.encodeWithSignature("owner()"));
+        address owner = Ownable(wallet).owner();
 
-        if (!ok || data.length < 32) return wallet;
-
-        address owner = abi.decode(data, (address));
         if (owner == address(0)) return wallet;
 
         return owner;

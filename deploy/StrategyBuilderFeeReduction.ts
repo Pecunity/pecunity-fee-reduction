@@ -30,7 +30,7 @@ const deploy: DeployFunction = async (hre) => {
         return
     }
 
-    const { destId, lockingAddress } = _deployConfig
+    const { destId, lockingAddress, factory } = _deployConfig
 
     let nonce = await hre.ethers.provider.getTransactionCount(deployer)
 
@@ -67,6 +67,7 @@ const deploy: DeployFunction = async (hre) => {
         args: [
             lockingAddress, // locking address
             predictedAddress, // predicted router address
+            factory, // strategy vault factory
         ],
         log: false,
     })
@@ -98,6 +99,7 @@ const deploy: DeployFunction = async (hre) => {
     await verify(deployment.address, [
         lockingAddress, // locking address
         predictedAddress, // predicted router address
+        factory,
     ])
 }
 
