@@ -82,27 +82,6 @@ contract StrategyBuilderFeeReductionRouter is OApp, OAppOptionsType3, IStrategyB
         destEid = _destEid;
     }
 
-    // =============================================================
-    // Owner Withdraw
-    // =============================================================
-
-    /// @notice Withdraws all native coins from the contract
-    /// @dev Only callable by the owner
-    function withdrawNative() external onlyOwner {
-        uint256 balance = address(this).balance;
-
-        if (balance == 0) {
-            revert NoFundsToWithdraw();
-        }
-
-        (bool success, ) = payable(owner()).call{ value: balance }("");
-        if (!success) {
-            revert WithdrawFailed();
-        }
-
-        emit NativeWithdrawn(owner(), balance);
-    }
-
     // ──────────────────────────────────────────────────────────────
     // Fee Quoting
     // ──────────────────────────────────────────────────────────────

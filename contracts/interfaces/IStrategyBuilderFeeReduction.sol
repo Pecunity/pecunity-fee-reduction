@@ -31,6 +31,15 @@ interface IStrategyBuilderFeeReduction is IFeeReduction {
     /// @notice Contract has insufficient native funds to send cross-chain message
     error OutOfFunds();
 
+    /// @notice Thrown when the owner tries to set an invalid gas limit
+    error GasLimitTooLow();
+
+    /// @notice Thrown when trying to withdraw with zero balance
+    error NoFundsToWithdraw();
+
+    /// @notice Thrown when native transfer fails
+    error WithdrawFailed();
+
     // ──────────────────────────────────────────────────────────────
     // Structs
     // ──────────────────────────────────────────────────────────────
@@ -48,6 +57,9 @@ interface IStrategyBuilderFeeReduction is IFeeReduction {
     // ──────────────────────────────────────────────────────────────
     // Events
     // ──────────────────────────────────────────────────────────────
+
+    /// @notice Emitted when the owner withdraws native funds
+    event NativeWithdrawn(address indexed owner, uint256 amount);
 
     /**
      * @notice Emitted when a token is deposited for a user
@@ -85,6 +97,10 @@ interface IStrategyBuilderFeeReduction is IFeeReduction {
     // ──────────────────────────────────────────────────────────────
     // Execution Functions
     // ──────────────────────────────────────────────────────────────
+
+    /// @notice Withdraws all native coins from the contract
+    /// @dev Only callable by the owner
+    function withdrawNative() external;
 
     /**
      * @notice Deposits a token activation for a user

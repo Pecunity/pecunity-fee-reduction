@@ -19,6 +19,7 @@ describe('FeeReduction Staging Test', function () {
     let StrategyBuilderFeeReduction: ContractFactory
     let MockNFT: ContractFactory
     let MockLocker: ContractFactory
+    let MockStrategyVaultFactory: ContractFactory
     let EndpointV2Mock: ContractFactory
 
     let ownerA: SignerWithAddress
@@ -35,6 +36,7 @@ describe('FeeReduction Staging Test', function () {
     let mockEndpointV2B: Contract
     let mockNFT: Contract
     let mockLocker: Contract
+    let mockStrategyVaultFactory: Contract
 
     // Before hook for setup that runs once before all tests in the block
     before(async function () {
@@ -45,6 +47,7 @@ describe('FeeReduction Staging Test', function () {
         StrategyBuilderFeeReduction = await ethers.getContractFactory('StrategyBuilderFeeReduction')
         MockNFT = await ethers.getContractFactory('MockNFT')
         MockLocker = await ethers.getContractFactory('MockLocker')
+        MockStrategyVaultFactory = await ethers.getContractFactory('MockStrategyVaultFactory')
 
         // Fetching the first three signers (accounts) from Hardhat's local Ethereum network
         const signers = await ethers.getSigners()
@@ -90,6 +93,9 @@ describe('FeeReduction Staging Test', function () {
         // Deploying a mock locker contract
         mockLocker = await MockLocker.deploy()
 
+        // Deploying a mock strategy vault factory contract
+        mockStrategyVaultFactory = await MockStrategyVaultFactory.deploy()
+
         nonce = await ownerA.getTransactionCount()
 
         predictedAddress = ethers.utils.getContractAddress({
@@ -97,7 +103,11 @@ describe('FeeReduction Staging Test', function () {
             nonce: nonce + 1,
         })
 
-        strategyBuilderFeeReduction = await StrategyBuilderFeeReduction.deploy(mockLocker.address, predictedAddress)
+        strategyBuilderFeeReduction = await StrategyBuilderFeeReduction.deploy(
+            mockLocker.address,
+            predictedAddress,
+            mockStrategyVaultFactory.address
+        )
 
         strategyBuilderFeeReductionRouter = await StrategyBuilderFeeReductionRouter.deploy(
             mockEndpointV2B.address,

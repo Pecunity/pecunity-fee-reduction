@@ -78,10 +78,6 @@ interface IStrategyBuilderFeeReductionRouter {
     // Owner Withdraw
     // =============================================================
 
-    /// @notice Withdraws all native coins from the contract
-    /// @dev Only callable by the owner
-    function withdrawNative() external;
-
     // ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
     // ┃        Messaging Functions       ┃
     // ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛

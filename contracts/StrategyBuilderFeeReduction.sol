@@ -33,7 +33,7 @@ import { IStrategyVaultFactory } from "./interfaces/IStrategyVaultFactory.sol";
  * This contract is designed to be read-only for fee logic,
  * except for explicit NFT deposit/withdrawal by users.
  */
-contract StrategyBuilderFeeReduction is IStrategyBuilderFeeReduction {
+contract StrategyBuilderFeeReduction is IStrategyBuilderFeeReduction, Ownable {
     using OptionsBuilder for bytes;
 
     // ┏━━━━━━━━━━━━━━━━━┓
@@ -68,7 +68,7 @@ contract StrategyBuilderFeeReduction is IStrategyBuilderFeeReduction {
     // ┃     Constructor     ┃
     // ┗━━━━━━━━━━━━━━━━━━━━━┛
 
-    constructor(address _lock, address _router, address _factory) {
+    constructor(address _lock, address _router, address _factory) Ownable(msg.sender) {
         lock = _lock;
         router = _router;
         factory = _factory;
@@ -81,6 +81,27 @@ contract StrategyBuilderFeeReduction is IStrategyBuilderFeeReduction {
     // ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
     // ┃   Execution Functions     ┃
     // ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+    // =============================================================
+    // Owner Withdraw
+    // =============================================================
+
+    /// @notice Withdraws all native coins from the contract
+    /// @dev Only callable by the owner
+    function withdrawNative() external onlyOwner {
+        uint256 balance = address(this).balance;
+
+        if (balance == 0) {
+            revert NoFundsToWithdraw();
+        }
+
+        (bool success, ) = payable(owner()).call{ value: balance }("");
+        if (!success) {
+            revert WithdrawFailed();
+        }
+
+        emit NativeWithdrawn(owner(), balance);
+    }
 
     function activateTokenForUser(address user, uint256 tokenId, uint8 rarity) external {
         if (msg.sender != router) {
@@ -225,7 +246,7 @@ contract StrategyBuilderFeeReduction is IStrategyBuilderFeeReduction {
      * @param wallet The wallet or contract address to resolve.
      * @return resolved The resolved owner or original wallet address.
      */
-    function _resolveVaultOwner(address wallet) public view returns (address) {
+    function _resolveVaultOwner(address wallet) internal view returns (address) {
         // EOA
         if (wallet.code.length == 0) return wallet;
 

@@ -36,6 +36,27 @@ interface IActivationManager {
     ///         unauthorized address (e.g. not the router).
     error NotAllowed();
 
+    /// @notice Thrown when trying to withdraw with zero balance
+    error NoFundsToWithdraw();
+
+    /// @notice Thrown when native transfer fails
+    error WithdrawFailed();
+
+    // =============================================================
+    // Events
+    // =============================================================
+
+    /// @notice Emitted when the owner withdraws native funds
+    event NativeWithdrawn(address indexed owner, uint256 amount);
+
+    // =============================================================
+    // Owner Withdraw
+    // =============================================================
+
+    /// @notice Withdraws all native coins from the contract
+    /// @dev Only callable by the owner
+    function withdrawNative() external;
+
     // =============================================================
     // Structs
     // =============================================================
