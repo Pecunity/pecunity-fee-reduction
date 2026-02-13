@@ -22,7 +22,7 @@ import { IActivationManager } from "./interfaces/IActivationManager.sol";
 contract ActivationManager is Ownable, IActivationManager {
     using OptionsBuilder for bytes;
 
-    uint8 public constant MIN_RARITY = 4;
+    uint8 public constant MIN_RARITY = 3;
 
     // =============================================================
     // State Variables

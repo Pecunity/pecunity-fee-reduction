@@ -6,7 +6,8 @@ task('fund-contract', 'Fund a contract with native tokens')
     .setAction(async (args, hre: HardhatRuntimeEnvironment) => {
         const amount = args.amount
 
-        const contract = hre.network.name === 'arb-sepolia' ? 'ActivationManager' : 'StrategyBuilderFeeReduction'
+        const contract =
+            hre.network.name === 'arb-sepolia' || 'arb-mainnet' ? 'ActivationManager' : 'StrategyBuilderFeeReduction'
 
         const deployment = await hre.deployments.get(contract)
 
